@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Deployment
 metadata: 
   name: mongodb
+  namespace: roboshop
   #replica set labels which can used under selectors to club the images
   labels:
     project: roboshop
@@ -26,3 +27,23 @@ spec:
       containers:
         - name: mongodb
           image: pardhu72/mongodb:v1
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb
+  namespace: roboshop
+  labels:
+    project: roboshop
+    component: mongodb
+    tier: database
+spec:
+  selector:
+    purpose: Service-demo
+    project: roboshop
+    environment: dev
+  ports:
+    - protocol: TCP
+      port: 80 # service port
+      targetPort: 89 # container port
