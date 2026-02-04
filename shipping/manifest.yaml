@@ -1,0 +1,64 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shipping
+  labels:
+    project: roboshop
+    component: shipping
+    tier: app-tier
+
+data:
+  CART_ENDPOINT: "cart:8080" 
+  DB_HOST: "mysql"
+---
+apiVersion: v1
+kind: Deployment
+metadata: 
+  name: shipping
+  namespace: roboshop
+  #replica set labels which can used under selectors to club the images
+  labels:
+    project: roboshop
+    component: shipping
+    tier: app-tier
+spec:
+  replicas: 1
+  # these are the labels replica set labels to create pod replicas, this should match pod labels
+  selector:
+    matchLabels:
+      project: roboshop
+      component: shipping
+      tier: app-tier
+  #this is pod defnition template
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        component: shipping
+        tier: app-tier
+    spec:
+      containers:
+        - name: shipping
+          image: pardhu72/shipping:v1
+          envFrom:
+            - configMapRef:
+                name: shipping
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shipping
+  namespace: roboshop
+  labels:
+    project: roboshop
+    component: shipping
+    tier: app-tier
+spec:
+  selector:
+    project: roboshop
+    component: shipping
+    tier: app-tier
+  ports:
+    - protocol: TCP
+      port: 8080 # service port
+      targetPort: 8080 # container port
