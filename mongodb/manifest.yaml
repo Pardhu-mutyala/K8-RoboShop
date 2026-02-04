@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Deployment
+metadata: 
+  name: mongodb
+  #replica set labels which can used under selectors to club the images
+  labels:
+    project: roboshop
+    component: mongodb
+    tier: database
+spec:
+  replicas: 1
+  # these are the labels replica set labels to create pod replicas, this should match pod labels
+  selector:
+    matchLabels:
+      project: roboshop
+      component: mongodb
+      tier: database
+  #this is pod defnition template
+  template:
+    metadata:
+      labels:
+        project: roboshop
+        component: mongodb
+        tier: database
+    spec:
+      containers:
+        - name: mongodb
+          image: pardhu72/mongodb:v1
