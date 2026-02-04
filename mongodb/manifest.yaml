@@ -40,10 +40,10 @@ metadata:
     tier: database
 spec:
   selector:
-    purpose: Service-demo
     project: roboshop
-    environment: dev
+    component: mongodb
+    tier: database
   ports:
     - protocol: TCP
-      port: 80 # service port
-      targetPort: 89 # container port
+      port: 27017 # service port
+      targetPort: 27017 # container port
