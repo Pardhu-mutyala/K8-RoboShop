@@ -8,11 +8,11 @@ metadata:
     tier: database
 type: Opaque
 data:
-  MYSQL_ROOT_PASSWORD: "decoded value"
+  MYSQL_ROOT_PASSWORD: "Um9ib3Nob3BAMQ=="
 
 
 ---
-apiVersion: v1
+apiVersion: apps/v1
 kind: Deployment
 metadata: 
   name: mysql
